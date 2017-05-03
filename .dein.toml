@@ -60,3 +60,7 @@ repo = 'bronson/vim-trailing-whitespace'
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
