@@ -1,33 +1,59 @@
-" ファイル読み込み時の文字エンコーディングの指定
-set encoding=utf-8
-" Vim Script内の文字エンコーディングの指定
-scriptencoding utf-8
-" ファイル保存時の文字エンコーディング
-set fileencoding=utf-8
+" --------------------------------------------------------------
+"　初期設定
+" --------------------------------------------------------------
+
+" vi互換モードオフ
+set nocompatible
+
+
+" --------------------------------------------------------------
+"　基本設定
+" --------------------------------------------------------------
+
+" vim デフォルトをcommandモードに設定
+set noinsertmode
+
+" エンコーディング設定
+set encoding=utf-8 " Vim内部のエンコーディング
+set termencoding=utf-8 " 出力エンコーディング
+set fileencoding=utf-8 " バッファ保存時のエンコーディング
+set fileencodings=utf-8,euc-jp,sjis,iso-2022-jp " ファイルを開く際のエンコーディング
+
 " 行番号の表示
 set number
-" tabの幅（半角スペースn個分）
-set tabstop=4
-" tab入力を半角スペースへ置換
-set expandtab
-" 改行時に前行のインデントを継承
-set autoindent
-" 改行時の前行の構文チェック->インデントの調整を行う
-set smartindent
-" smartindentで調整時に増減する幅
-set shiftwidth=4
-" カーソル移動で行末->次行、行頭への移動を可能に
-set whichwrap=b,s,[,],<,>
-" カーソルラインのハイライト
-set cursorline
-" バックスペースキーの有効化
-set backspace=indent,eol,start
-" インクリメンタルサーチ
+
+" ベースインデント設定
+set expandtab " tab入力を半角スペースへ置換
+set tabstop=4 " tabの幅（半角スペースn個分）
+set autoindent " 改行時に前行のインデントを継承
+set smartindent " 改行時の前行の構文チェック->インデントの調整を行う
+set shiftwidth=4 " smartindentで調整時に増減する幅
+
+" バックアップファイル/スワップファイルの非作成設定
+set nobackup
+set noswapfile
+
+" インクリメンタルサーチの有効化
 set incsearch
+
 " 検索時に検索結果をハイライト
 set hlsearch
-" コマンドモードの補完
+
+" カーソルラインをハイライト
+set cursorline
+
+" カーソル移動で行末->次行、行頭への移動を可能に
+set whichwrap=b,s,[,],<,>
+
+" バックスペースキーの有効化
+set backspace=indent,eol,start
+
+" コマンドモードの補完有効化
 set wildmenu
+
+
+" php辞書ファイルの読み込み
+autocmd FileType php,ctp :set dictionary=~/.vim/dict/php.dict
 
 " クリップボードペースト時のインデント調整
 if &term =~ "xterm"
@@ -43,11 +69,18 @@ if &term =~ "xterm"
     inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
 
-" taglistの表示設定
-let Tlist_Show_One_File = 1
-let Tlist_Use_Right_Window = 1
-let Tlist_Exit_OnlyWindow = 1
-map<silent> <leader>E :TlistToggle<cr>
+
+"===========================
+" GitGutter
+"===========================
+let g:gitgutter_max_signs = 500 "差分表示の最大数
+let g:gitgutter_highlight_lines = 1 "GitGutter起動時に差分行のハイライト有効化
+let g:gitgutter_enabled = 0 "vim起動時は無効化
+
+"===========================
+" neocomplcache
+"===========================
+let g:neocomplcache_enable_at_startup = 1 " 起動時に有効化
 
 " Markdownシンタックスハイライト設定
 let g:markdown_faced_languages = [
