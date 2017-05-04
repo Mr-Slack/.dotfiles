@@ -43,6 +43,20 @@ if &term =~ "xterm"
     inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
 
+" taglistの表示設定
+let Tlist_Show_One_File = 1
+let Tlist_Use_Right_Window = 1
+let Tlist_Exit_OnlyWindow = 1
+map<silent> <leader>E :TlistToggle<cr>
+
+" Markdownシンタックスハイライト設定
+let g:markdown_faced_languages = [
+\ 'css',
+\ 'javascript',
+\ 'js=javascript',
+\ 'json=javascript',
+\ 'xml',
+\ ]
 
 " reset augroup
 augroup MyAutoCmd
