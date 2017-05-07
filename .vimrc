@@ -45,11 +45,28 @@ set cursorline
 " カーソル移動で行末->次行、行頭への移動を可能に
 set whichwrap=b,s,[,],<,>
 
-" バックスペースキーの有効化
+" バックスペースキーの有効設定
 set backspace=indent,eol,start
 
 " コマンドモードの補完有効化
 set wildmenu
+
+" ビープ音の消去
+set vb t_vb=
+
+" ステータスライン設定
+set statusline=%F " ファイル名表示
+set statusline+=%m " 変更チェック表示
+set statusline+=%= " 以降は右寄せ表示
+set statusline+=[ENC=%{&fileencoding}] " ファイルエンコーディングの表示
+set statusline+=[LOW=%l/%L] " 現在行数/全行数の表示
+set laststatus=2 " ステータスラインを常に表示
+
+" --------------------------------------------------------------
+" キーマップ
+" --------------------------------------------------------------
+" ESC ESC 検索時ハイライト無効化
+nnoremap <ESC><ESC> :nohlsearch<CR>"
 
 
 " php辞書ファイルの読み込み
@@ -69,6 +86,18 @@ if &term =~ "xterm"
     inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
 
+"=================================
+" Jqコマンドの追加(JSON Viewer用)
+"=================================
+command! -nargs=? Jq call s:Jq(<f-args>)
+function! s:Jq(...)
+    if 0 == a:0
+        let l:arg = "."
+    else
+        let l:arg = a:1
+    endif
+    execute "%! jq \"" . l:arg . "\""
+endfunction
 
 "===========================
 " GitGutter
@@ -76,6 +105,36 @@ endif
 let g:gitgutter_max_signs = 500 "差分表示の最大数
 let g:gitgutter_highlight_lines = 1 "GitGutter起動時に差分行のハイライト有効化
 let g:gitgutter_enabled = 0 "vim起動時は無効化
+
+
+"===========================
+" NERDTree
+"===========================
+let g:NERDTreeShowBookmarks=1 "ブックマークの初期表示設定
+
+" 引数なしでvimを開くとNERDTreeを起動
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+call NERDTreeHighlightFile('md',     'blue',    'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml',    'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('config', 'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('conf',   'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('json',   'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('html',   'yellow',  'none', 'yellow',  '#151515')
+call NERDTreeHighlightFile('css',    'cyan',    'none', 'cyan',    '#151515')
+call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php',    'Magenta', 'none', '#ff00ff', '#151515')
+
+"===========================
+" tagbar
+"===========================
+let g:tagbar_left = 0
+let g:tagbar_autofocus = 1
 
 "===========================
 " neocomplcache
@@ -119,14 +178,9 @@ if has('vim_starting') && dein#check_install()
 endif
 " }}}
 
-" 引数なしでvimを開くとNERDTreeを起動
-let file_name = expand('%')
-if has('vim_starting') &&  file_name == ''
-  autocmd VimEnter * NERDTree ./
-endif
+syntax enable
 
+" カラーテーマ
 set background=dark
 colorscheme hybrid
-
-syntax enable
 "End dein Scripts-------------------------
