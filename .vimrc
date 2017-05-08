@@ -67,7 +67,8 @@ set laststatus=2 " ステータスラインを常に表示
 " --------------------------------------------------------------
 " ESC ESC 検索時ハイライト無効化
 nnoremap <ESC><ESC> :nohlsearch<CR>"
-
+" Ctrl + e でNERDTree
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 " php辞書ファイルの読み込み
 autocmd FileType php,ctp :set dictionary=~/.vim/dict/php.dict
@@ -110,7 +111,12 @@ let g:gitgutter_enabled = 0 "vim起動時は無効化
 "===========================
 " NERDTree
 "===========================
-let g:NERDTreeShowBookmarks=1 "ブックマークの初期表示設定
+
+" ブックマークの初期表示設定
+let g:NERDTreeShowBookmarks=1
+
+" 隠しファイルをデフォルトで表示させる
+let NERDTreeShowHidden = 1
 
 " 引数なしでvimを開くとNERDTreeを起動
 autocmd StdinReadPre * let s:std_in=1
@@ -181,6 +187,15 @@ endif
 syntax enable
 
 " カラーテーマ
-set background=dark
-colorscheme hybrid
+colorscheme apprentice
+
+" vim-airline用設定
+set laststatus=2
+" タブバーのカスタマイズを有効にする
+let g:airline#extensions#tabline#enabled = 1
+" タブバーの右領域を非表示にする
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#show_close_button = 0
+
 "End dein Scripts-------------------------

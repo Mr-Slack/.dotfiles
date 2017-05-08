@@ -1,18 +1,18 @@
 # 基本は github.com のレポジトリーを指定するだけ
+
+# vimプラグイン管理用プラグイン
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+# 非同期処理実現用プラグイン
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 
-[[plugins]]
-repo = 'delphinus35/typescript-vim'
-rev  = 'colorize-template-strings'
-
+# ステータスバーカスタマイズ用プラグイン
 [[plugins]]
 repo    = 'vim-airline/vim-airline'
 depends = ['vim-airline-themes']
-
+# vim-airline用カラーテーマ
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 
@@ -23,10 +23,12 @@ depends = ['context_filetype.vim']
 [[plugins]]
  repo = 'Shougo/context_filetype.vim'
 
-[[plugins]] # toml syntax
+# tomlファイルのシンタックスチェック用プラグイン
+[[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
+#ディレクトリツリー表示用プラグイン
 [[plugins]]
 repo = 'scrooloose/nerdtree'
 
@@ -92,3 +94,6 @@ repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'elzr/vim-json'
+
+[[plugins]]
+repo = 'romainl/Apprentice'
